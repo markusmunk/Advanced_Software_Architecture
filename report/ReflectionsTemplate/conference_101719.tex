@@ -111,71 +111,99 @@
 \IEEEpubidadjcol
 
 
-\section{Contribution}
-
 \section{Burger 4.0 Production System}
 
 \subsection{Use Cases}
 
 \begin{itemize}
     \item \textbf{Order Placement:} Customers can place orders through the GUI, selecting from the menu options.
-    
     \item \textbf{Order Tracking:} Customers can view the progress of their orders in real-time through the GUI.
-    
     \item \textbf{Ingredient Preparation:} Stations prepare and process the ingredients required for burger, fries, and soda orders.
-    
     \item \textbf{Burger Assembly:} A dedicated station assembles the burger orders according to the customer's specifications.
-    
     \item \textbf{Robotic Transport:} Robots autonomously move ingredients and assembled items between stations.
-    
     \item \textbf{Packaging:} A packaging station ensures that orders are appropriately packaged before delivery.
-    
     \item \textbf{Order Delivery:} Robots, similar to MIR-bots, deliver completed orders to the pick-up station for customers.
 \end{itemize}
 
 \subsection{Required Stations}
 
 \begin{enumerate}
-    \item \textbf{Ordering GUI Station:} This station provides the user interface for customers to place orders and track their progress.
-    
+    \item \textbf{Ordering GUI Station:} Provides the user interface for customers to place orders and track their progress.
+        \begin{itemize}
+            \item \textbf{Programming Language:} HTML, JavaScript
+            \item \textbf{Libraries/Frameworks:} React, Angular, Vue.js
+        \end{itemize}
     \item \textbf{Ingredient Preparation Stations:} Multiple stations equipped with various technologies for preparing burger ingredients, fries, and soda.
-    
+        \begin{itemize}
+            \item \textbf{Programming Language:} C++
+            \item \textbf{Libraries/Frameworks:} OpenCV (for computer vision), PLC Programming (for control)
+        \end{itemize}
     \item \textbf{Burger Assembly Station:} A specialized station for assembling burgers with precision.
-    
+        \begin{itemize}
+            \item \textbf{Programming Language:} Python
+            \item \textbf{Libraries/Frameworks:} Robotic Process Automation (RPA) software, such as UiPath
+        \end{itemize}
     \item \textbf{Robotic Transport System:} Autonomous robots equipped with sensors and navigation systems for moving ingredients and assembled items between stations.
-    
+        \begin{itemize}
+            \item \textbf{Programming Language:} ROS (Robot Operating System)
+            \item \textbf{Libraries/Frameworks:} ROS Navigation, Gazebo (for simulation)
+        \end{itemize}
     \item \textbf{Packaging Station:} A station responsible for packaging orders securely.
-    
+        \begin{itemize}
+            \item \textbf{Programming Language:} Java
+            \item \textbf{Libraries/Frameworks:} JavaFX (for HMI), RFID libraries
+        \end{itemize}
     \item \textbf{Order Pick-up Station:} Customers collect their orders from this station, where robot deliveries are made.
+        \begin{itemize}
+            \item \textbf{Programming Language:} C#
+            \item \textbf{Libraries/Frameworks:} .NET, MIR Robot SDK
+        \end{itemize}
 \end{enumerate}
 
 \subsection{Relevant Technologies}
 
 \begin{itemize}
     \item \textbf{IoT Sensors:} Utilized in ingredient preparation stations for monitoring and controlling cooking processes.
-    
-    \item \textbf{Robotic Process Automation (RPA):} Employed in the burger assembly station for precise and efficient assembly of burger components.
+    \begin{itemize}
+        \item \textbf{Programming Language:} Python, C++
+        \item \textbf{Libraries/Frameworks:} Raspberry Pi (for IoT), DHT22 (for temperature and humidity sensing)
+    \end{itemize}
     
     \item \textbf{Machine Vision Systems:} Used in robotic transport systems for object recognition and navigation.
+    \begin{itemize}
+        \item \textbf{Programming Language:} Python, C++
+        \item \textbf{Libraries/Frameworks:} OpenCV, PCL (Point Cloud Library)
+    \end{itemize}
     
     \item \textbf{Artificial Intelligence (AI):} AI algorithms can optimize the routing and coordination of robots within the production system.
-    
-    \item \textbf{RFID Technology:} Implemented for tracking and managing inventory of ingredients and packaging materials.
+    \begin{itemize}
+        \item \textbf{Programming Language:} Python, Java
+        \item \textbf{Libraries/Frameworks:} TensorFlow, PyTorch, scikit-learn
+    \end{itemize}
     
     \item \textbf{IoT Communication Protocols:} Utilized for real-time data exchange between stations and the central control system.
-    
-    \item \textbf{Human-Machine Interface (HMI):} Integrated into the GUI for user-friendly order placement and tracking.
+    \begin{itemize}
+        \item \textbf{Protocols:} MQTT, CoAP
+    \end{itemize}
     
     \item \textbf{Event-Driven Architecture:} Enables communication between stations and updates the GUI with order progress information.
+    \begin{itemize}
+        \item \textbf{Programming Language:} Node.js (JavaScript)
+        \item \textbf{Libraries/Frameworks:} Apache Kafka, RabbitMQ
+    \end{itemize}
+    
+    \item \textbf{Databases:} Used for storing order data, inventory information, and system logs.
+    \begin{itemize}
+        \item \textbf{Database Management System (DBMS):} PostgreSQL
+        \item \textbf{Libraries/Frameworks:} SQLAlchemy (Python ORM)
+    \end{itemize}
 \end{itemize}
 
 \subsection{Assumptions}
 
 \begin{itemize}
     \item The system operates in a controlled environment, simulating the production process without physical machines.
-    
     \item Sufficient computing resources and network connectivity are available to support the system's operations.
-    
     \item Real-time data exchange and communication among stations are reliable and low-latency.
 \end{itemize}
 
@@ -183,16 +211,11 @@
 
 \begin{itemize}
     \item Scalability: Consider the system's scalability to accommodate varying order volumes and production demands.
-    
     \item Fault Tolerance: Implement redundancy and failover mechanisms to ensure uninterrupted production.
-    
     \item Data Security: Safeguard customer data and system integrity against potential cyber threats.
-    
     \item Maintenance and Upkeep: Plan for regular maintenance and updates of the simulated system.
-    
     \item Integration: Ensure seamless integration of technologies and stations for efficient production.
 \end{itemize}
-
 \section{Discussion}
 
 
