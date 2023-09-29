@@ -16,7 +16,7 @@ on:
   # Environment Variables
 env:
   PACKAGE_REGISTRY_TO_USE: markusmunk
-  DOCKER_IMAGE_FRONTEND: react_frontend-order-management
+  DOCKER_IMAGE_FRONTEND: react_frontend_order_management
   DOCKER_IMAGE_ORDER_MANAGEMENT: dotnet_order_management
   PROJECT_NAME: BURP 4.0
   GROUP_NUMBER: Group07
@@ -123,7 +123,7 @@ jobs:
         with:
           context: ./src/frontend-order-management #Path to your dockerfile
           push: true
-          tags: ghcr.io/${{ env.OWNER_LOWER }}/${{ env.DOCKER_IMAGE_FRONTEND }}:${{ github.ref_name }},ghcr.io/${{ env.OWNER_LOWER }}/${{ env.DOCKER_IMAGE_FRONTEND }}:latest      
+          tags: ghcr.io/${{ env.OWNER_LOWER }}/${{ env.DOCKER_IMAGE_FRONTEND }}:1.0-${{ github.sha }},ghcr.io/${{ env.OWNER_LOWER }}/${{ env.DOCKER_IMAGE_FRONTEND }}:latest     
         
   build-push-order-management:
     runs-on: ubuntu-latest
