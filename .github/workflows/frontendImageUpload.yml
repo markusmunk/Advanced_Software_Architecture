@@ -40,6 +40,8 @@ jobs:
         with:
           name: repository-artifacts
           path: .
+      - name: ls
+        run: ls
       - name: go to frontend folder
         run: cd src/frontend-order-management    
       - name: pwd
