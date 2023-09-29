@@ -1,5 +1,11 @@
 version: "3"
 
+networks:
+  services:
+    driver: bridge
+  orders:
+    driver: bridge
+
 services:
   frontend:
     build:
@@ -7,3 +13,38 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5173:5173"
+    networks:
+      - services
+
+  order-management:
+    container_name: order-management-service
+    depends_on:
+      - orders_db
+    build:
+      context: ./OrderManagement
+      dockerfile: Dockerfile
+    ports:
+      - "5033:80"
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+    networks:
+      - services
+      - orders
+  
+  orders_db:
+    image: postgres:latest
+    container_name: orders_db
+    environment:
+      POSTGRES_DB: ordersDb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - orders_data:/var/lib/postgresql/data
+    networks:
+      - orders
+        
+volumes:
+  orders_data:        
