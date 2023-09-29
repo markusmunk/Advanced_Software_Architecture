@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import BurbLogo from './assets/burp_logo.png'
 import './App.css'
+import {MenuItem} from './components/MenuItem'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -17,6 +18,7 @@ function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
+        <MenuItem name={'burger'} />
       </div>
     </>
   )
