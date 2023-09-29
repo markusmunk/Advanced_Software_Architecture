@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
 import BurbLogo from './assets/burp_logo.png'
 import './App.css'
 
