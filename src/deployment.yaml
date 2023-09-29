@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
         - name: frontend-order-management
-          image: ghcr.io/markusmunk/frontend-order-management:latest
+          image: ghcr.io/markusmunk/react_frontend_order_management:latest
           ports:
             - containerPort: 5173
           resources:
