@@ -95,7 +95,7 @@ jobs:
         
   build-push-order-management:
     runs-on: ubuntu-latest
-    needs: [ test-application ]
+    needs: [test-application]
     permissions: 
       packages: write
       contents: read
@@ -118,7 +118,7 @@ jobs:
       - name: Build & Push image
         uses: docker/build-push-action@v3
         with:
-          context: ./src/api #Path to your dockerfile
+          context: ./src/OrderManagement #Path to your dockerfile
           push: true
           tags: ghcr.io/${{ env.OWNER_LOWER }}/${{ env.DOCKER_IMAGE_ORDER_MANAGEMENT }}:1.0-${{ github.sha }},ghcr.io/${{ env.OWNER_LOWER }}/${{ env.DOCKER_IMAGE_ORDER_MANAGEMENT }}:latest
   
