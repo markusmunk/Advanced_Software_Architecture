@@ -23,8 +23,8 @@ jobs:
       packages: write
       contents: read
     steps:
-      - name: Download repository artifact
-        uses: actions/download-artifact@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4.0.0
         with:
           name: repository-artifacts
           path: .
