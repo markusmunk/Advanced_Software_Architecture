@@ -16,6 +16,7 @@ on:
   # Environment Variables
 env:
   PACKAGE_REGISTRY_TO_USE: nico8034
+  DOCKER_IMAGE_FRONTEND: react_frontend-order-management
   DOCKER_IMAGE_ORDER_MANAGEMENT: dotnet_order_management
   DOCKER_IMAGE_NAME: lowercase-image-name
   PROJECT_NAME: BURP 4.0
@@ -86,7 +87,7 @@ jobs:
     # Allow pipeline to continue on error
     continue-on-error: true
     steps:
-      # Download build artifact and use for applicaiton tests
+      # Download build artifact and use for application tests
       - name: Download build artifact
         uses: actions/download-artifact@v3
         with:
@@ -94,6 +95,36 @@ jobs:
           path: ./build
       - name: Test application
         run: echo "test"
+        
+  build-push-frontend:
+    runs-on: ubuntu-latest
+    needs: build-frontend-project
+    permissions:
+      packages: write
+      contents: read
+    steps:
+      - name: Download repository artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: repository-artifacts
+          path: .
+      - name: Login to GitHub Package Registry
+        uses: docker/login-action@v2
+        with:
+          # Authenticate with GitHub Container Registry, could be changed to use DockerHub
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      # Transform github.actor to lowercase
+      - name: Transform username to lowercase
+        run: echo "OWNER_LOWER=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+      # Building and pushing application image go to: GitHub -> Profile -> Packages 
+      - name: Build & Push image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./src/frontend-order-management #Path to your dockerfile
+          push: true
+          tags: ghcr.io/${{ env.OWNER_LOWER }}/${{ env.DOCKER_IMAGE_FRONTEND }}:${{ github.ref_name }},ghcr.io/${{ env.OWNER_LOWER }}/${{ env.DOCKER_IMAGE_FRONTEND }}:latest      
         
   build-push-order-management:
     runs-on: ubuntu-latest
