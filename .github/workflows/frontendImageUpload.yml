@@ -17,8 +17,38 @@ env:
   DOCKER_IMAGE_NAME: frontend-order-management
 
 jobs:
+  clone-repository:
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read 
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.0.0
+      - name: Upload Repository artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: repository-artifacts
+          path: .
+
+  build-frontend-project:
+    runs-on: ubuntu-latest
+    needs: clone-repository
+    steps:
+      - name: Download repository artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: repository-artifacts
+          path: .
+      - name: go to frontend folder
+        run: cd src/frontend-order-management    
+      - name: Install dependencies
+        run: npm install
+      - name: Build project
+        run: npm run build
   build-push-docker-image:
     runs-on: ubuntu-latest
+    needs: build-frontend-project
     permissions:
       packages: write
       contents: read
