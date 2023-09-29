@@ -40,20 +40,14 @@ jobs:
         with:
           name: repository-artifacts
           path: .
-      - name: ls
-        run: ls
-      - name: go to frontend folder
-        run: cd src/frontend-order-management    
-      - name: pwd
-        run: pwd
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
           node-version: 16.x
       - name: Install dependencies
-        run: npm install
+        run: cd src/frontend-order-management && npm install
       - name: Build project
-        run: npm run build
+        run: cd src/frontend-order-management && npm run build
   build-push-docker-image:
     runs-on: ubuntu-latest
     needs: build-frontend-project
