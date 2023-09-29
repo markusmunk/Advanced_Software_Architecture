@@ -8,22 +8,18 @@ networks:
 
 services:
   frontend:
+    image: ghcr.io/markusmunk/react_frontend_order_management:latest
     container_name: frontend
-    build:
-      context: ./frontend-order-management
-      dockerfile: Dockerfile
     ports:
       - "5173:5173"
     networks:
       - services
 
   order-management:
+    image: ghcr.io/markusmunk/dotnet_order_management:latest
     container_name: order-management-service
     depends_on:
       - orders_db
-    build:
-      context: ./OrderManagement
-      dockerfile: Dockerfile
     ports:
       - "5033:80"
     environment:
