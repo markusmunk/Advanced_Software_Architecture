@@ -7,8 +7,11 @@ spec:
   ports:
     - port: 80
       targetPort: 5173
+      name: http
   selector:
     app: frontend-order-management
+  externalIPs:
+    - 10.123.252.239
 ---
 apiVersion: apps/v1
 kind: Deployment # This denotes that it's a Deployment
@@ -26,7 +29,7 @@ spec:
     spec:
       containers:
         - name: frontend-order-management
-          image: ghcr.io/markusmunk/frontend-order-management:1.0-04b1866baac66e49e9cdd2bd031ff72e87ef48be
+          image: ghcr.io/markusmunk/frontend-order-management:latest
           ports:
             - containerPort: 5173
           resources:
