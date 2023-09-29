@@ -3,10 +3,9 @@ interface IOrders {
     id: string;
     name: string;
   }
-const defaultPosts:IOrders[] = [];
 const API_URL = 'http://localhost:3001';
 
-export async function getRecipes() {
+export async function getRecipes(): Promise<IOrders[]> {
   return axios.get(`${API_URL}/recipes`, {
     headers: {
         "Content-Type": "application/json"
