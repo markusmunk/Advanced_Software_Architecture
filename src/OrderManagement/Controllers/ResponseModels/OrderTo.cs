@@ -1,4 +1,4 @@
-﻿namespace Order_Management.Controllers.ResponseModels;
+﻿namespace OrderManagement.Controllers.ResponseModels;
 
 public class OrderTo
 {
