@@ -1,0 +1,20 @@
+[
+    {
+        "name": "burger",
+        "price": 10,
+        "description": "tasty burger",
+        "image": "https://i0.wp.com/gastromand.dk/wordpress/wp-content/uploads/2019/03/burger.jpg?resize=700%2C325&ssl=1"
+    },
+    {
+        "name": "pizza",
+        "price": 20,
+        "description": "tasty pizza",
+        "image": "https://www.seriouseats.com/recipes/images/2015/09/20150914-joe-beddia-pizza-tomato-pie-recipe-1.jpg"
+    },
+    {
+        "name": "fries",
+        "price": 5,
+        "description": "tasty fries",
+        "image": "https://www.seriouseats.com/recipes/images/2015/07/20150702-sous-vide-hamburger-anova-primary-1500x1125.jpg"
+    }
+]

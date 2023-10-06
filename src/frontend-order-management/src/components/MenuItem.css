@@ -1,0 +1,12 @@
+.item {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+
+}
+
+.btn {
+    background-color: rgb(71, 158, 234);
+    width: 100%;
+}
