@@ -1,12 +1,21 @@
 .item {
+    margin-bottom: 1em;
+    padding: 1em;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: start;
+    background-color: beige;
+    color: "black";
+    border-radius: 10px;
 
 }
 
 .btn {
     background-color: rgb(71, 158, 234);
     width: 100%;
+}
+
+.text {
+    color: black;
 }

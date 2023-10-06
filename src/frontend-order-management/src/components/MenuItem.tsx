@@ -14,9 +14,9 @@ export function MenuItem (props) {
     }
     return (
         <div className='item'> 
-            <h3>{item.name}</h3>
-            <p>{item.description}</p>
-            <p>{item.price}</p>
+            <h3 className='text'>{item.name}</h3>
+            <p className='text'>{item.description}</p>
+            <p className='text'>{item.price}</p>
             <img src={item.image} alt={item.name} />
             {props.addToCart ? <button className='btn' onClick={addToCart}><FiShoppingCart/></button> : undefined}
             

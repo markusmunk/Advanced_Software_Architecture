@@ -27,9 +27,7 @@ function App() {
 
   return (
     <>
-      <div>
-        <img src={BurbLogo} className="logo" alt="Burb logo" />
-      </div>
+      <img src={BurbLogo} className="logo" alt="Burb logo" />
       <h1>Burp 4.0</h1>
       <h2>Menu</h2>
       <div className="card">
@@ -40,12 +38,17 @@ function App() {
         <ul>
           {order ? <MenuItem item={order}/>: undefined}
         </ul>
-        <button onClick={() =>{
+        <button className='postBtn' onClick={() =>{
           if(order){
             postOrder({name: order.name})
             setOrder(undefined)
           }
         } }><p>Confirm Order</p></button>
+        <button className='clearBtn' onClick={() =>{
+          if(order){
+            setOrder(undefined)
+          }
+        } }><p>Clear order</p></button>
       </div>
     </>
   )

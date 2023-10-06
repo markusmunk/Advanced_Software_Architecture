@@ -2,18 +2,22 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
+  text-align: left;
 }
 
 .logo {
+  position: absolute;
+  top: 0em;
+  right: 2em;
   height: 20em;
-  padding: 1.5em;
   will-change: filter;
   transition: filter 300ms;
+  transition: transform .4s ease-in-out;
 }
 
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
+  transform: rotate(10deg);
 }
 
 .logo.react:hover {
@@ -42,4 +46,16 @@
 
 .read-the-docs {
   color: #888;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.postBtn {
+  background-color: rgb(71, 158, 234);
+}
+
+.clearBtn {
+  background-color: rgb(185, 92, 92);
 }
