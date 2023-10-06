@@ -8,7 +8,7 @@ export interface IPostOrder {
     name: string;
 }
 
-const API_URL: string = 'http://localhost:5033';
+const API_URL: string = 'http://order-management-service:5033';
 
 export async function getRecipes(): Promise<IOrder[]> {
   return axios.get(`${API_URL}/api/orders`, {
