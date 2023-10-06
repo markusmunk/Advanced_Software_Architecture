@@ -4,6 +4,5 @@ namespace OrderManagement.Controllers.RequestModels;
 
 public class CreateOrderRequest
 {
-    [Required]
-    public string Name { get; set; } = null!;
+    [Required] public string Name { get; set; } = null!;
 }

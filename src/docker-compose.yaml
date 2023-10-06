@@ -1,11 +1,5 @@
 version: "3"
 
-networks:
-  services:
-    driver: bridge
-  orders:
-    driver: bridge
-
 services:
   frontend:
     container_name: frontend
@@ -14,8 +8,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "5173:5173"
-    networks:
-      - services
 
   order-management:
     container_name: order-management-service
@@ -28,9 +20,6 @@ services:
       - "5033:80"
     environment:
       - ASPNETCORE_URLS=http://+:80
-    networks:
-      - services
-      - orders
   
   orders_db:
     image: postgres:latest
@@ -44,8 +33,63 @@ services:
       - "5432:5432"
     volumes:
       - orders_data:/var/lib/postgresql/data
-    networks:
-      - orders
-        
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:6.0.0
+    hostname: zookeeper
+    container_name: zookeeper
+    ports:
+      - "12181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    volumes:
+      - zk-data:/var/lib/zookeeper/data
+      - zk-txn-logs:/var/lib/zookeeper/log
+
+  kafka-broker:
+    image: confluentinc/cp-kafka:6.0.0
+    hostname: kafka-broker
+    container_name: kafka-broker
+    depends_on:
+      - zookeeper
+    ports:
+      - "29092:29092"
+      - "9092:9092"
+      - "9101:9101"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_JMX_PORT: 9101
+    volumes:
+      - kafka-data:/var/lib/kafka/data
+    restart: on-failure
+
+  schema-registry:
+    image: confluentinc/cp-schema-registry:6.0.0
+    hostname: schema-registry
+    container_name: schema-registry
+    depends_on:
+      - kafka-broker
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'kafka-broker:29092'
+    restart: on-failure
+
 volumes:
-  orders_data:        
+  zk-data:
+    driver: local
+  zk-txn-logs:
+    driver: local
+  kafka-data:
+    driver: local
+  orders_data:
+    driver: local

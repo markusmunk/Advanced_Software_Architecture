@@ -18,7 +18,7 @@ public sealed class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddApplicationServices(_configuration);
-        
+
         var mvc = services.AddControllers().AddControllersAsServices();
 
         SetJsonApiSerializer(mvc);
@@ -37,7 +37,7 @@ public sealed class Startup
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
         RunMigrations(app).GetAwaiter().GetResult();
-        
+
         app.UseHttpsRedirection();
 
         app.UseRouting();
@@ -61,19 +61,38 @@ public sealed class Startup
     {
         using var scope = app.ApplicationServices.CreateScope();
 
+        var logger = scope.ServiceProvider.GetRequiredService<ILogger<Startup>>();
+        var lifetime = scope.ServiceProvider.GetRequiredService<IHostApplicationLifetime>();
+        
         var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-        if (context == null)
+        while (!await CanConnectToDatabaseAsync(context, logger, lifetime.ApplicationStopping))
         {
-            return;
-        }
-        
-        var canConnect = await context.Database.CanConnectAsync();
-        if (!canConnect)
-        {
-            return;
+            if (lifetime.ApplicationStopping.IsCancellationRequested)
+            {
+                logger.LogInformation("Application stop requested. Stopping migration");
+                return;
+            }
+
+            logger.LogWarning("Failed to connect to database, sleeping...");
+            await Task.Delay(TimeSpan.FromSeconds(5), lifetime.ApplicationStopping);
         }
 
         await context.Database.MigrateAsync();
+    }
+    
+    private async Task<bool> CanConnectToDatabaseAsync(DbContext context, ILogger logger,
+        CancellationToken cancellationToken)
+    {
+        try
+        {
+            await context.Database.ExecuteSqlAsync($"select 1", cancellationToken);
+            return true;
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "Database connection failed");
+            return false;
+        }
     }
 }

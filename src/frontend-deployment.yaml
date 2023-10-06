@@ -1,24 +1,22 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend-order-management-svc
+  name: frontend-order-management-service
 spec:
-  type: NodePort
-  ports:
-    - port: 80
-      targetPort: 5173
-      name: http
   selector:
     app: frontend-order-management
-  externalIPs:
-    - 10.123.252.239
+  ports:
+    - protocol: TCP
+      port: 80 # Expose port 80 on the Service
+      targetPort: 5173 # Forward traffic to targetPort 5173
+  type: NodePort
 ---
 apiVersion: apps/v1
 kind: Deployment # This denotes that it's a Deployment
 metadata:
   name: frontend-order-management # Name of the deployment
 spec:
-  replicas: 1 # 2 Pods will be created.
+  replicas: 1 # 1 Pod will be created.
   selector:
     matchLabels:
       app: frontend-order-management
@@ -29,6 +27,7 @@ spec:
     spec:
       containers:
         - name: frontend-order-management
+          imagePullPolicy: Always
           image: ghcr.io/markusmunk/react_frontend_order_management:latest
           ports:
             - containerPort: 5173
