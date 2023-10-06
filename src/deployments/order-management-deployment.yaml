@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-management-service
+spec:
+  selector:
+    app: order-management
+  ports:
+    - protocol: TCP
+      port: 80 # Expose port 80 on the Service
+      targetPort: 5033 # Forward traffic to targetPort 5173
+  type: NodePort
+---
+---
+apiVersion: apps/v1
+kind: Deployment # This denotes that it's a Deployment
+metadata:
+  name: order-management # Name of the deployment
+spec:
+  replicas: 1 # 1 Pod will be created.
+  selector:
+    matchLabels:
+      app: order-management
+  template:
+    metadata:
+      labels:
+        app: order-management
+    spec:
+      containers:
+        - name: order-management
+          imagePullPolicy: Always
+          image: ghcr.io/markusmunk/dotnet_order_management:latest
+          ports:
+            - containerPort: 5033
