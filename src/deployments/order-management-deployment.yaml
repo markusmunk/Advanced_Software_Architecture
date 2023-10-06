@@ -7,17 +7,16 @@ spec:
     app: order-management
   ports:
     - protocol: TCP
-      port: 80 # Expose port 80 on the Service
-      targetPort: 5033 # Forward traffic to targetPort 5173
+      port: 5033  # Expose port 5033 on the Service
+      targetPort: 80  # Forward traffic to targetPort 80
   type: NodePort
 ---
----
 apiVersion: apps/v1
-kind: Deployment # This denotes that it's a Deployment
+kind: Deployment
 metadata:
-  name: order-management # Name of the deployment
+  name: order-management
 spec:
-  replicas: 1 # 1 Pod will be created.
+  replicas: 1
   selector:
     matchLabels:
       app: order-management
@@ -31,4 +30,12 @@ spec:
           imagePullPolicy: Always
           image: ghcr.io/markusmunk/dotnet_order_management:latest
           ports:
-            - containerPort: 5033
+            - containerPort: 80
+          env:
+            - name: ASPNETCORE_URLS
+              value: "http://+:80"
+            - name: ConnectionStrings__DefaultConnection
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: connectionString
